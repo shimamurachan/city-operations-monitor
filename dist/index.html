@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Keeta 沙特商业分析模拟项目：经营监控、履约异常、补贴效率与渠道留存可视化。">
-  <title>Keeta 沙特商业分析作品集</title>
+  <meta name="description" content="Data Analysis 课程独立项目：基于公开外卖业务数据完成数据清洗、经营监控、异常诊断、补贴效率与用户留存分析。">
+  <title>外卖平台经营分析｜Data Analysis 课程项目</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23071320'/%3E%3Cpath d='M8 7v18M8 16l9-9M8 16l10 9' fill='none' stroke='%234ecdc4' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M22 9v14M27 13v10' stroke='%23ff8a3d' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
   <style>
     :root {
@@ -84,6 +84,31 @@
       font-size: .82rem;
     }
     .disclaimer::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    .project-meta {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      margin-top: 34px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .project-meta-item { padding: 18px 18px 18px 0; }
+    .project-meta-item + .project-meta-item { padding-left: 18px; border-left: 1px solid var(--border); }
+    .project-meta-label { color: var(--muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; }
+    .project-meta-value { margin-top: 4px; font-weight: 700; }
+    .resume-section { background: linear-gradient(180deg, rgba(78, 205, 196, .05), transparent 85%); }
+    .resume-layout { display: grid; grid-template-columns: .68fr 1.32fr; gap: 42px; align-items: start; }
+    .skill-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; }
+    .skill-tag { padding: 5px 10px; border: 1px solid var(--border); border-radius: 999px; color: var(--sky); font-size: .78rem; }
+    .source-note { margin-top: 24px; padding-left: 14px; border-left: 3px solid var(--yellow); color: var(--muted); font-size: .86rem; }
+    .resume-copy { padding: 26px; border: 1px solid var(--border); border-radius: var(--radius); background: rgba(14, 34, 56, .72); }
+    .resume-copy-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+    .copy-button { min-height: 40px; padding: 8px 14px; border: 1px solid rgba(78, 205, 196, .5); border-radius: 10px; background: transparent; color: var(--teal); cursor: pointer; }
+    .copy-button:hover, .copy-button:focus-visible { background: rgba(78, 205, 196, .1); }
+    .resume-points { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; counter-reset: resume-point; }
+    .resume-points li { display: grid; grid-template-columns: 30px 1fr; gap: 12px; color: var(--muted); }
+    .resume-points li::before { counter-increment: resume-point; content: "0" counter(resume-point); color: var(--orange); font-size: .75rem; font-weight: 800; letter-spacing: .06em; }
+    .resume-points b { color: var(--text); }
+    .copy-status { min-height: 1.4em; margin: 12px 0 0; color: var(--good); font-size: .78rem; }
     .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 18px 0 42px; }
     .metric {
       padding: 18px;
@@ -179,7 +204,10 @@
     :focus-visible { outline: 3px solid rgba(78, 205, 196, .65); outline-offset: 4px; }
     @media (max-width: 900px) {
       .metrics { grid-template-columns: repeat(2, 1fr); }
-      .split, .method { grid-template-columns: 1fr; }
+      .split, .method, .resume-layout { grid-template-columns: 1fr; }
+      .project-meta { grid-template-columns: repeat(2, 1fr); }
+      .project-meta-item:nth-child(3) { padding-left: 0; border-left: 0; border-top: 1px solid var(--border); }
+      .project-meta-item:nth-child(4) { border-top: 1px solid var(--border); }
       .chart-grid { grid-template-columns: 1fr; }
       .actions { grid-template-columns: 1fr; }
     }
@@ -196,6 +224,11 @@
     }
     @media (max-width: 430px) {
       .metrics { grid-template-columns: 1fr; }
+      .project-meta { grid-template-columns: 1fr; }
+      .project-meta-item, .project-meta-item + .project-meta-item { padding: 14px 0; border-left: 0; border-top: 1px solid var(--border); }
+      .project-meta-item:first-child { border-top: 0; }
+      .resume-copy { padding: 20px 16px; }
+      .resume-copy-head { align-items: flex-start; flex-direction: column; }
       h1 { font-size: 2.35rem; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -206,8 +239,9 @@
 </head>
 <body>
   <header class="shell topbar">
-    <div class="brand"><span class="brand-mark">K</span><span>沙特经营分析</span></div>
+    <div class="brand"><span class="brand-mark">K</span><span>外卖经营分析</span></div>
     <nav aria-label="页面导航">
+      <a href="#experience">项目经历</a>
       <a href="#overview">经营概览</a>
       <a href="#fulfillment">履约异常</a>
       <a href="#subsidy">补贴效率</a>
@@ -218,10 +252,43 @@
 
   <main>
     <section class="shell hero" id="overview">
-      <div class="eyebrow">Business analysis portfolio · 14 days</div>
-      <h1>从经营信号到可验证的决策建议</h1>
-      <p class="hero-copy">覆盖利雅得、吉达、达曼、麦加和麦地那，以日报监控发现问题，再用订单、补贴与用户数据验证假设。结论区分事实、推断和待验证因素。</p>
-      <div class="disclaimer">老师提供的模拟数据，不代表 Keeta 真实内部经营表现</div>
+      <div class="eyebrow">Data analysis coursework · public dataset</div>
+      <h1>外卖平台经营分析：从数据质量到商业建议</h1>
+      <p class="hero-copy">个人独立完成数据清洗、指标设计、Excel/WPS 日报、SQL/Python 复现、异常诊断与可视化汇报。分析覆盖5个城市、14天经营数据，并将观察结果转化为可验证的业务建议。</p>
+      <div class="disclaimer">课程独立项目｜使用公开数据集并按业务场景整理｜非 Keeta 内部数据</div>
+      <div class="project-meta" aria-label="项目基本信息">
+        <div class="project-meta-item"><div class="project-meta-label">Role</div><div class="project-meta-value">独立数据分析</div></div>
+        <div class="project-meta-item"><div class="project-meta-label">Data scale</div><div class="project-meta-value">18,873 单 · 8,000 用户</div></div>
+        <div class="project-meta-item"><div class="project-meta-label">Stack</div><div class="project-meta-value">Excel · SQL · Python</div></div>
+        <div class="project-meta-item"><div class="project-meta-label">Deliverables</div><div class="project-meta-value">日报 · 专题分析 · 网页</div></div>
+      </div>
+    </section>
+
+    <section class="section resume-section" id="experience">
+      <div class="shell resume-layout">
+        <div>
+          <div class="eyebrow">Project experience</div>
+          <h2>Data Analysis 课程独立项目</h2>
+          <p class="hero-copy">围绕“经营监控—发现异常—拆解原因—提出行动”的完整链路，构建一份能够在简历、作品集和面试中复用的分析案例。</p>
+          <div class="skill-list" aria-label="项目技能">
+            <span class="skill-tag">pandas</span><span class="skill-tag">SQLite</span><span class="skill-tag">SQL</span><span class="skill-tag">openpyxl</span><span class="skill-tag">Excel/WPS</span><span class="skill-tag">数据可视化</span><span class="skill-tag">商业分析</span>
+          </div>
+          <p class="source-note"><b>经历边界：</b>数据来自公开外卖业务数据集并经过课堂项目清洗整理；城市和品牌仅作为案例背景，不代表企业实际经营表现。</p>
+        </div>
+        <div class="resume-copy">
+          <div class="resume-copy-head">
+            <h3>简历可用表述</h3>
+            <button class="copy-button" id="copy-resume" type="button">复制四条项目经历</button>
+          </div>
+          <ol class="resume-points" id="resume-points">
+            <li><span><b>整合并标准化4张公开业务数据表</b>，覆盖18,873笔订单、8,000名用户、70条日度汇总与1,258条补贴明细；使用 pandas 与 SQLite 建模，并建立重复主键、缺失值、日期范围和跨表对账校验。</span></li>
+            <li><span><b>搭建五城14天经营监控体系</b>，使用 COUNTIFS、SUMIFS 等兼容公式构建15项核心指标及阈值预警，并以 SQL/Python 复现口径，确保三套结果一致。</span></li>
+            <li><span><b>定位吉达7月23日履约异常</b>：完单率由87.1%降至77.6%，送达时长由26.3升至37.9分钟，取消率由9.4%升至17.9%；结合活跃骑手反升至181人，排除“骑手数量下降”的单一解释。</span></li>
+            <li><span><b>完成补贴效率与渠道留存专题分析</b>，估算利雅得异常期预算偏离4,726.49 SAR，并识别KOL渠道14天复购率仅11.4%、消费金额代理值/CAC为0.65，据此提出预算上限、分层投放和对照实验方案。</span></li>
+          </ol>
+          <p class="copy-status" id="copy-status" aria-live="polite"></p>
+        </div>
+      </div>
     </section>
 
     <section class="shell">
@@ -352,6 +419,7 @@
             <div class="method-item"><h3>01 · 数据模型</h3><span>18,873笔订单、8,000名用户、70条日度汇总、1,258条补贴明细，标准化为四张SQLite表。</span></div>
             <div class="method-item"><h3>02 · 自动校验</h3><span>检查重复主键、关键字段缺失、日期范围，以及订单状态、GMV和补贴逐日逐城对账。</span></div>
             <div class="method-item"><h3>03 · 证据表达</h3><span>每个结论都区分事实、推断与未知；策略用实验指标和停止条件验证。</span></div>
+            <div class="method-item"><h3>04 · 正式交付</h3><span>输出WPS兼容日报、补贴与留存专题workbook、管理层经营回顾、静态分析网页与面试讲解框架。</span></div>
           </div>
           <div class="code-line" aria-label="分析项目的三个固定运行命令">python 作品集代码/src/analysis_pipeline.py load<br>python 作品集代码/src/analysis_pipeline.py analyze<br>python 作品集代码/tests/run_checks.py</div>
         </div>
@@ -359,7 +427,7 @@
     </section>
   </main>
 
-  <footer><div class="shell">Keeta 沙特商业分析实战项目 · 模拟数据 · 2026</div></footer>
+  <footer><div class="shell">外卖平台经营分析 · Data Analysis课程项目 · 公开数据集 · 2026</div></footer>
 
   <script>
     const colors = {
@@ -492,6 +560,21 @@
     function renderExcess(){renderHorizontal("excess-chart",excess,"value",3200,()=>"var(--orange)",v=>v.toLocaleString("zh-CN",{minimumFractionDigits:0,maximumFractionDigits:0}));}
     function renderRepeat(){renderHorizontal("repeat-chart",retention,"repeat",100,d=>d.name==="KOL推广"?"var(--red)":"var(--teal)",v=>v.toFixed(1)+"%");}
     function renderLtv(){renderHorizontal("ltv-chart",retention,"ratio",27,d=>d.name==="KOL推广"?"var(--red)":"var(--blue)",v=>v.toFixed(2));}
+
+    const resumeCopy = [
+      "整合并标准化4张公开业务数据表，覆盖18,873笔订单、8,000名用户、70条日度汇总与1,258条补贴明细；使用 pandas 与 SQLite 建模，并建立重复主键、缺失值、日期范围和跨表对账校验。",
+      "搭建五城14天经营监控体系，使用 COUNTIFS、SUMIFS 等兼容公式构建15项核心指标及阈值预警，并以 SQL/Python 复现口径，确保三套结果一致。",
+      "定位吉达7月23日履约异常：完单率由87.1%降至77.6%，送达时长由26.3升至37.9分钟，取消率由9.4%升至17.9%；结合活跃骑手反升至181人，排除‘骑手数量下降’的单一解释。",
+      "完成补贴效率与渠道留存专题分析，估算利雅得异常期预算偏离4,726.49 SAR，并识别KOL渠道14天复购率仅11.4%、消费金额代理值/CAC为0.65，据此提出预算上限、分层投放和对照实验方案。"
+    ].map(item => "• " + item).join("\n");
+    $("copy-resume").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(resumeCopy);
+        $("copy-status").textContent = "已复制，可直接粘贴到简历中。";
+      } catch {
+        $("copy-status").textContent = "浏览器未允许复制，请手动选择上方文字。";
+      }
+    });
 
     function renderAll(){renderCompletion();renderJeddah();renderSubsidyTrend();renderStacked();renderExcess();renderRepeat();renderLtv();}
     setupLegend(); renderAll();
