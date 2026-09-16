@@ -6,6 +6,7 @@
   "scripts": {
     "db:load": "node scripts/load-database.mjs",
     "api": "node server/app.mjs",
-    "check": "node scripts/check-data.mjs"
+    "check": "node scripts/check-data.mjs",
+    "sql": "node scripts/query.mjs"
   }
 }
