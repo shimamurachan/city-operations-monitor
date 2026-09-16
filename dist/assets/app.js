@@ -10,8 +10,9 @@
   const formatOne = (value) => Number(value).toFixed(1);
   const shortDate = (date) => date ? date.slice(5).replace('-', '/') : '';
 
-  async function loadData(path) {
-    const response = await fetch(path);
+  async function loadData(path, apiPath) {
+    const isLocalService = ['127.0.0.1', 'localhost'].includes(window.location.hostname) && window.location.port === '8787';
+    const response = await fetch(isLocalService && apiPath ? apiPath : path);
     if (!response.ok) throw new Error('数据文件暂时无法加载');
     return response.json();
   }
@@ -172,7 +173,7 @@
   }
 
   async function initDashboard() {
-    const rows = await loadData('data/daily_monitoring.json');
+    const rows = await loadData('data/daily_monitoring.json', '/api/daily');
     const cityInput = $('#city-filter');
     const startInput = $('#start-date');
     const endInput = $('#end-date');
@@ -235,7 +236,7 @@
   }
 
   async function initFulfillment() {
-    const rows = await loadData('data/daily_monitoring.json');
+    const rows = await loadData('data/daily_monitoring.json', '/api/daily');
     const cityInput = $('#fulfillment-city');
     const startInput = $('#fulfillment-start');
     const endInput = $('#fulfillment-end');
@@ -283,7 +284,7 @@
   }
 
   async function initSubsidy() {
-    const rows = await loadData('data/subsidy_dimension.json');
+    const rows = await loadData('data/subsidy_dimension.json', '/api/subsidies');
     const startInput = $('#subsidy-start');
     const endInput = $('#subsidy-end');
     const typeInput = $('#subsidy-type');
@@ -333,7 +334,7 @@
   }
 
   async function initRetention() {
-    const rows = await loadData('data/retention_summary.json');
+    const rows = await loadData('data/retention_summary.json', '/api/retention');
     const channelInput = $('#channel-filter');
     rows.forEach((row) => channelInput.insertAdjacentHTML('beforeend', `<option value="${row.registration_channel}">${row.registration_channel}</option>`));
     let metric = 'repeat_rate';
