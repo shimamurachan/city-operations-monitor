@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="城市经营监控台数据更新">
+  <title>数据更新</title>
+  <link rel="stylesheet" href="assets/app.css">
+  <script src="assets/app.js" defer></script>
+</head>
+<body data-page="import">
+  <header class="topbar shell">
+    <a class="brand" href="index.html"><span class="brand-mark">O</span><span>运营分析台</span></a>
+    <nav aria-label="主要导航">
+      <a href="index.html" data-nav="dashboard">经营监控</a>
+      <a href="fulfillment.html" data-nav="fulfillment">履约诊断</a>
+      <a href="subsidy.html" data-nav="subsidy">补贴分析</a>
+      <a href="retention.html" data-nav="retention">渠道分析</a>
+      <a href="data.html" data-nav="import">数据更新</a>
+    </nav>
+  </header>
+  <main class="page shell">
+    <section class="page-intro">
+      <p class="eyebrow">DATA REFRESH</p>
+      <h1>数据更新</h1>
+      <p>上传新的业务工作簿，系统会先校验结构与关键字段，再更新本地数据库和看板汇总数据。</p>
+    </section>
+    <section class="workspace two-col">
+      <article class="panel import-panel">
+        <p class="eyebrow">LOCAL IMPORT</p>
+        <h2>导入 Excel 工作簿</h2>
+        <form id="import-form" class="import-form">
+          <label class="field" for="workbook-file">Excel 文件
+            <input id="workbook-file" name="workbook" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required>
+          </label>
+          <button id="import-button" class="button primary" type="submit">校验并更新数据</button>
+        </form>
+        <p id="import-status" class="feedback" role="status" aria-live="polite"></p>
+      </article>
+      <article class="panel insight-panel">
+        <p class="eyebrow">HOW IT WORKS</p>
+        <h2>更新后会发生什么</h2>
+        <ol class="steps">
+          <li>校验必需工作表、字段、日期与关键主键。</li>
+          <li>生成看板所需的日度、补贴和渠道聚合数据。</li>
+          <li>重建本地 SQLite 数据库；经营监控和专题页刷新后显示新结果。</li>
+        </ol>
+        <div class="rule-box"><strong>仅限本地</strong><span>为保护业务数据，线上展示页面不提供上传；请在本机运行服务后使用此功能。</span></div>
+      </article>
+    </section>
+    <section class="panel table-panel">
+      <div class="panel-heading"><div><p class="eyebrow">WORKBOOK REQUIREMENTS</p><h2>工作簿要求</h2></div><span class="panel-note">仅支持未加密 .xlsx，最大 15 MB</span></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>必需工作表</th><th>用途</th><th>示例关键字段</th></tr></thead>
+        <tbody>
+          <tr><td>订单明细</td><td>订单主键校验</td><td>订单ID、日期、城市、订单状态、商品金额(SAR)</td></tr>
+          <tr><td>用户表</td><td>渠道留存与效率汇总</td><td>用户ID、注册渠道、14天内订单数、14天内消费(SAR)</td></tr>
+          <tr><td>日度经营汇总</td><td>经营监控与履约诊断</td><td>日期、城市、订单总量、完成订单、总GMV(SAR)</td></tr>
+          <tr><td>补贴汇总明细</td><td>补贴效率拆解</td><td>日期、城市、补贴类型、用户类型、补贴总金额(SAR)</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+  </main>
+  <footer class="shell footer">外卖平台经营分析 · 本地数据更新</footer>
+</body>
+</html>

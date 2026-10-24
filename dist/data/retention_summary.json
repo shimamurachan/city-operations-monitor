@@ -1,28 +1,15 @@
 [
   {
-    "registration_channel": "自然流量",
-    "active_users": 2646,
-    "repeat_users": 2213,
-    "avg_orders_14d": 2.942176870748299,
-    "avg_spend_14d_sar": 199.68565759637187,
-    "avg_subsidy_14d_sar": 10.364852607709752,
-    "cac_sar": 8,
-    "first_order_subsidy_rate": 0.5468631897203325,
-    "repeat_rate": 0.8363567649281936,
-    "ltv_cac": 24.960707199546484,
-    "rating": "健康"
-  },
-  {
     "registration_channel": "老客推荐",
     "active_users": 1185,
     "repeat_users": 1094,
     "avg_orders_14d": 3.7130801687763713,
-    "avg_spend_14d_sar": 247.70655696202533,
-    "avg_subsidy_14d_sar": 13.145383966244726,
+    "avg_spend_14d_sar": 247.70655696202508,
+    "avg_subsidy_14d_sar": 13.145383966244724,
     "cac_sar": 12,
     "first_order_subsidy_rate": 0.5746835443037974,
     "repeat_rate": 0.9232067510548523,
-    "ltv_cac": 20.642213080168776,
+    "ltv_cac": 20.642213080168755,
     "rating": "健康"
   },
   {
@@ -30,12 +17,25 @@
     "active_users": 2113,
     "repeat_users": 1565,
     "avg_orders_14d": 2.3653573118788453,
-    "avg_spend_14d_sar": 157.9375011831519,
-    "avg_subsidy_14d_sar": 8.627098911500237,
+    "avg_spend_14d_sar": 157.93750118315197,
+    "avg_subsidy_14d_sar": 8.627098911500239,
     "cac_sar": 30,
     "first_order_subsidy_rate": 0.5485092285849503,
     "repeat_rate": 0.7406530998580217,
-    "ltv_cac": 5.26458337277173,
+    "ltv_cac": 5.264583372771733,
+    "rating": "健康"
+  },
+  {
+    "registration_channel": "自然流量",
+    "active_users": 2646,
+    "repeat_users": 2213,
+    "avg_orders_14d": 2.942176870748299,
+    "avg_spend_14d_sar": 199.68565759637175,
+    "avg_subsidy_14d_sar": 10.364852607709743,
+    "cac_sar": 8,
+    "first_order_subsidy_rate": 0.5468631897203325,
+    "repeat_rate": 0.8363567649281936,
+    "ltv_cac": 24.96070719954647,
     "rating": "健康"
   },
   {
@@ -43,12 +43,12 @@
     "active_users": 1517,
     "repeat_users": 173,
     "avg_orders_14d": 1.114040870138431,
-    "avg_spend_14d_sar": 29.37955174686882,
-    "avg_subsidy_14d_sar": 4.535622940013184,
+    "avg_spend_14d_sar": 29.379551746868778,
+    "avg_subsidy_14d_sar": 4.535622940013183,
     "cac_sar": 45,
     "first_order_subsidy_rate": 0.5491100856954515,
     "repeat_rate": 0.11404087013843112,
-    "ltv_cac": 0.652878927708196,
+    "ltv_cac": 0.6528789277081951,
     "rating": "亏损"
   }
 ]

@@ -284,14 +284,16 @@
   }
 
   async function initSubsidy() {
-    const rows = await loadData('data/subsidy_dimension.json', '/api/subsidies');
+    const rows = (await loadData('data/subsidy_dimension.json', '/api/subsidies')).map((row) => ({ ...row, city: row.city || '利雅得' }));
     const startInput = $('#subsidy-start');
     const endInput = $('#subsidy-end');
+    const cityInput = $('#subsidy-city');
     const typeInput = $('#subsidy-type');
     const userInput = $('#subsidy-user');
     const categoryInput = $('#subsidy-category');
     const dates = unique(rows.map((row) => row.date));
     setDateLimits(startInput, endInput, dates);
+    unique(rows.map((row) => row.city)).forEach((value) => cityInput.insertAdjacentHTML('beforeend', `<option value="${value}">${value}</option>`));
     [['subsidy_type', typeInput], ['user_type', userInput], ['category', categoryInput]].forEach(([field, input]) => unique(rows.map((row) => row[field])).forEach((value) => input.insertAdjacentHTML('beforeend', `<option value="${value}">${value}</option>`)));
     let groupBy = 'category';
 
@@ -299,7 +301,7 @@
       const start = startInput.value;
       const end = endInput.value;
       if (!validateRange(start, end)) return;
-      const filtered = rows.filter((row) => row.date >= start && row.date <= end && (!typeInput.value || row.subsidy_type === typeInput.value) && (!userInput.value || row.user_type === userInput.value) && (!categoryInput.value || row.category === categoryInput.value));
+      const filtered = rows.filter((row) => row.date >= start && row.date <= end && (!cityInput.value || row.city === cityInput.value) && (!typeInput.value || row.subsidy_type === typeInput.value) && (!userInput.value || row.user_type === userInput.value) && (!categoryInput.value || row.category === categoryInput.value));
       const subsidy = sum(filtered, 'subsidy_total_sar');
       const gmv = sum(filtered, 'related_gmv_sar');
       const orders = sum(filtered, 'subsidized_orders');
@@ -366,6 +368,43 @@
     update();
   }
 
+  function initImport() {
+    const form = $('#import-form');
+    if (!form) return;
+    const status = $('#import-status');
+    const button = $('#import-button');
+    const isLocalService = ['127.0.0.1', 'localhost'].includes(window.location.hostname) && window.location.port === '8787';
+    if (!isLocalService) {
+      button.disabled = true;
+      status.textContent = '数据上传仅在本地服务模式提供。请运行 npm run api 后访问 http://127.0.0.1:8787/data.html。';
+      return;
+    }
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const file = $('#workbook-file').files[0];
+      if (!file) {
+        status.textContent = '请选择一个 .xlsx 文件。';
+        return;
+      }
+      button.disabled = true;
+      status.textContent = '正在校验并导入数据，请稍候…';
+      try {
+        const payload = new FormData();
+        payload.append('workbook', file);
+        const response = await fetch('/api/import-workbook', { method: 'POST', body: payload });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || '导入失败。');
+        const { summary } = result;
+        status.textContent = `导入完成：${summary.orders.toLocaleString()} 笔订单、${summary.users.toLocaleString()} 名用户、${summary.dailyRecords} 条城市日记录、${summary.subsidyRecords} 条补贴记录，日期范围为 ${summary.dateRange}。刷新其他页面即可查看新数据。`;
+        form.reset();
+      } catch (error) {
+        status.textContent = error.message || '导入失败，请检查文件格式。';
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+
   async function init() {
     activateNav();
     try {
@@ -374,6 +413,7 @@
       if (page === 'fulfillment') await initFulfillment();
       if (page === 'subsidy') await initSubsidy();
       if (page === 'retention') await initRetention();
+      if (page === 'import') initImport();
     } catch (error) {
       setFeedback('页面数据加载失败，请刷新后重试。');
       console.error(error);

@@ -153,6 +153,9 @@ td.number, th.number { text-align: right; font-variant-numeric: tabular-nums; }
 .rule-box { display: grid; gap: 5px; margin-top: 20px; padding: 14px; border-left: 3px solid var(--teal); background: rgba(78,205,196,.06); color: var(--muted); font-size: .86rem; }
 .rule-box strong { color: var(--text); }
 .definition-list { margin: 15px 0 0; }
+.import-form { display: grid; gap: 16px; margin-top: 18px; }
+.import-form .field { max-width: 440px; }
+.button:disabled { opacity: .55; cursor: not-allowed; }
 .definition-list div { padding: 10px 0; border-bottom: 1px solid var(--border); }
 .definition-list dt { color: var(--text); font-weight: 700; }
 .definition-list dd { margin: 3px 0 0; color: var(--muted); font-size: .87rem; }

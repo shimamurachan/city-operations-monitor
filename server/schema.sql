@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS daily_operations (
 
 CREATE TABLE IF NOT EXISTS subsidy_dimensions (
   date TEXT NOT NULL,
+  city TEXT NOT NULL,
   subsidy_type TEXT NOT NULL,
   user_type TEXT NOT NULL,
   category TEXT NOT NULL,
@@ -26,7 +27,7 @@ CREATE TABLE IF NOT EXISTS subsidy_dimensions (
   related_gmv_sar REAL NOT NULL,
   avg_subsidy_sar REAL NOT NULL,
   subsidy_gmv_ratio REAL NOT NULL,
-  PRIMARY KEY (date, subsidy_type, user_type, category)
+  PRIMARY KEY (date, city, subsidy_type, user_type, category)
 );
 
 CREATE TABLE IF NOT EXISTS channel_retention (
@@ -45,4 +46,4 @@ CREATE TABLE IF NOT EXISTS channel_retention (
 
 CREATE INDEX IF NOT EXISTS idx_daily_operations_city_date ON daily_operations(city, date);
 CREATE INDEX IF NOT EXISTS idx_subsidy_dimensions_date ON subsidy_dimensions(date);
-CREATE INDEX IF NOT EXISTS idx_subsidy_dimensions_filters ON subsidy_dimensions(subsidy_type, user_type, category);
+CREATE INDEX IF NOT EXISTS idx_subsidy_dimensions_filters ON subsidy_dimensions(city, subsidy_type, user_type, category);

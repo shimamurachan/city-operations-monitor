@@ -8,5 +8,9 @@
     "api": "node server/app.mjs",
     "check": "node scripts/check-data.mjs",
     "sql": "node scripts/query.mjs"
+  },
+  "dependencies": {
+    "busboy": "^1.6.0",
+    "exceljs": "^4.4.0"
   }
 }
