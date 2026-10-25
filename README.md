@@ -12,6 +12,10 @@ npm run api
 
 打开 `http://127.0.0.1:8787`。此模式下前端数据来自 SQLite 数据服务：`/api/daily`、`/api/subsidies`、`/api/retention`。
 
+## 在线展示
+
+`dist/` 可发布到 GitHub Pages，提供使用脱敏聚合数据的静态看板。GitHub Pages 不运行 Node.js 与 SQLite，因此在线展示页不提供 Excel 上传或本地 API；这两项功能仍在本地运行模式下使用。
+
 ## 更新业务数据
 
 1. 先运行 `npm run api`，打开 `http://127.0.0.1:8787/data.html`。
